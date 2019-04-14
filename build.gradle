@@ -47,7 +47,7 @@ repositories {
 
 dependencies {
     deobfProvided "vazkii.botania:Botania:r1.10-359.27:api"
-    deobfProvided "mezz.jei:jei_1.12.2:4.8.5.138:api"
+    deobfProvided "mezz.jei:jei_1.12.2:4.13.0.219:api"
     deobfProvided "net.industrial-craft:industrialcraft-2:2.8.84-ex112:api"
     deobfProvided "appeng:appliedenergistics2:rv5-stable-11:api"
 }
