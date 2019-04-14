@@ -1,6 +1,5 @@
 package com.forestbat.warhammer.tileentity;
 
-import com.forestbat.warhammer.Warhammer;
 import com.google.common.collect.Lists;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

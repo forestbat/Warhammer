@@ -21,16 +21,15 @@ public class PipesConnector extends EntityMachineBase {
     public static boolean canWorkBench;
     public static boolean canSpawnStone;
     public static boolean inifinityWater;
-    public static PipesConnector start;
 
     public boolean isConnectedWith(@Nullable TileEntity dest) {
         int xAspect=0, yAspect=0,zAspect=0;
-        World world=start.getWorld();
-        BlockPos startPos=start.pos;
+        World world=this.getWorld();
+        BlockPos thisPos=this.pos;
         BlockPos destPos=dest.getPos();
-        boolean neighBoor= destPos==startPos.up()||destPos==startPos.down()||destPos==startPos.west()||
-                destPos==startPos.east()||destPos==startPos.north()||destPos==startPos.south();
-        Iterator<BlockPos> blockPosIterator=BlockPos.getAllInBox(startPos,destPos).iterator();
+        boolean neighBoor= destPos==thisPos.up()||destPos==thisPos.down()||destPos==thisPos.west()||
+                destPos==thisPos.east()||destPos==thisPos.north()||destPos==thisPos.south();
+        Iterator<BlockPos> blockPosIterator=BlockPos.getAllInBox(thisPos,destPos).iterator();
         while (blockPosIterator.hasNext()) {
             BlockPos middle = blockPosIterator.next();
             //todo if(dest==null);
@@ -50,8 +49,8 @@ public class PipesConnector extends EntityMachineBase {
                     zAspect += 1;
             }
         }
-        return xAspect>=2*abs(destPos.getX()-startPos.getX())-2 && yAspect>=2*abs(destPos.getY())-startPos.getY()-2 &&
-                zAspect>=2*abs(destPos.getZ()-startPos.getZ())-2;
+        return xAspect>=2*abs(destPos.getX()-thisPos.getX())-2 && yAspect>=2*abs(destPos.getY())-thisPos.getY()-2 &&
+                zAspect>=2*abs(destPos.getZ()-thisPos.getZ())-2;
     }
     public void autoSmelt(PipesConnector pipesConnector){
         ItemStack waitBurnStack=pipesConnector.getStackInSlot(0);

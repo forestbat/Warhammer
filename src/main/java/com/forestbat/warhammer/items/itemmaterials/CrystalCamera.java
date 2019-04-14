@@ -16,7 +16,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
 public class CrystalCamera extends ItemArmor {
-    private Minecraft mc;
+    private Minecraft mc=Minecraft.getMinecraft();
     public CrystalCamera(ArmorMaterial armorMaterial,int renderIndexIn,EntityEquipmentSlot entityEquipmentSlot){
         super(armorMaterial,renderIndexIn,entityEquipmentSlot);
         setCreativeTab(Warhammer.WARHAMMER);

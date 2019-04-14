@@ -20,7 +20,10 @@ import java.util.UUID;
 import static com.forestbat.warhammer.configs.WarhammerConfig.KEY_LEFT_HAND;
 
 public class AttributeCellAnnihilateGun implements IAttributeInstance {
-    EntityPlayer player;
+    private EntityPlayer player;
+    public AttributeCellAnnihilateGun(EntityPlayer player){
+        this.player=player;
+    }
     long timer = Keyboard.getEventNanoseconds();
     @Nonnull
     public IAttribute getAttribute() {
@@ -54,7 +57,7 @@ public class AttributeCellAnnihilateGun implements IAttributeInstance {
     @Override
     @Nullable
     public Collection<AttributeModifier> getModifiers() {
-        return player.getEntityAttribute(new AttributeCellAnnihilateGun().getAttribute()).getModifiers();
+        return player.getEntityAttribute(new AttributeCellAnnihilateGun(player).getAttribute()).getModifiers();
     }
 
     @Override
@@ -91,7 +94,7 @@ public class AttributeCellAnnihilateGun implements IAttributeInstance {
         if(!PlayerReinforcer.SUPER_STRONG){
             player.setHealth(player.getHealth()-(float)getBaseValue());
         }
-        double harm = player.getEntityAttribute(new AttributeCellAnnihilateGun().getAttribute()).getAttributeValue();
+        double harm = player.getEntityAttribute(new AttributeCellAnnihilateGun(player).getAttribute()).getAttributeValue();
         targetEntity.setFire(1);
         targetEntity.attackEntityFrom(DamageSource.causePlayerDamage(player), (float)harm);
         player.setLastAttackedEntity(targetEntity);

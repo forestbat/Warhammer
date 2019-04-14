@@ -1,6 +1,5 @@
 package com.forestbat.warhammer.items.itemtools;
 
-import com.forestbat.warhammer.Warhammer;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;

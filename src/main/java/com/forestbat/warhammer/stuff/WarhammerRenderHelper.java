@@ -37,7 +37,7 @@ public class WarhammerRenderHelper {
         GL11.glPushMatrix();
         GL11.glColor3f(1, 1, 1);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-        GlStateManager.enableColorMaterial();
+        GL11.glEnable(GL_COLOR_MATERIAL);
         GL11.glPushMatrix();
         GL11.glTranslatef(xPos + 8, yPos + 16, 50f);
         GL11.glScalef(-scale, scale, scale);

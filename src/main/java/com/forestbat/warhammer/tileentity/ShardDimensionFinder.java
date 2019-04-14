@@ -16,7 +16,7 @@ public class ShardDimensionFinder extends EntityMachineBase implements ITickable
 
     public boolean generateNewWorld() {
         int generateWorldAmount=0;
-        if (getEnergyStored() > 1e9) {
+        if (getEnergyStored() > 1e9 && dimensionid!=null) {
             DimensionManager.registerDimension(dimensionid.hashCode(), DimensionType.OVERWORLD);
             generateWorldAmount+=1;
             markDirty();

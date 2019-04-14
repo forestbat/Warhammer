@@ -8,7 +8,7 @@ import ic2.api.energy.tile.IEnergySource;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.common.Optional;
-import vazkii.botania.api.mana.IManaPool;
+//import vazkii.botania.api.mana.IManaPool;
 
 import static com.forestbat.warhammer.configs.WarhammerConfig.*;
 import static com.google.common.math.IntMath.pow;
