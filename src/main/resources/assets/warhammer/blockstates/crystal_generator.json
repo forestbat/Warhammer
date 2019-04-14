@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "crystal_generator" },
+    "facing=south": { "model": "crystal_generator", "y": 180 },
+    "facing=west":  { "model": "crystal_generator", "y": 270 },
+    "facing=east":  { "model": "crystal_generator", "y": 90 }
+  }
+}

@@ -1,0 +1,70 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = "http://files.minecraftforge.net/maven" }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+version = "1.0"
+group = "com.forestbat.warhammer"
+archivesBaseName = "warhammer"
+
+sourceCompatibility = targetCompatibility = '1.8'
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
+
+minecraft {
+    version = "1.12.2-14.23.4.2705"
+    runDir = "run"
+    coreMod = "com.forestbat.warhammer.asm.WarhammerLoader"
+    mappings = "snapshot_20171003"
+    // makeObfSourceJar = false 
+}
+repositories {
+    maven {
+        url = "http://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+        name = "JEI"
+        url = "modmaven.k-4u.nl"
+    }
+    maven{
+        name="industrial craft"
+        url="http://maven.ic2.player.to/"
+    }
+    maven {
+        url = "http://maven.blamejared.com"
+    }
+}
+
+dependencies {
+    //deobfProvided "vazkii.botania:Botania:r1.10-359.27:api"
+    deobfProvided "mezz.jei:jei_1.12.2:4.8.5.138:api"
+    deobfProvided "net.industrial-craft:industrialcraft-2:2.8.84-ex112:api"
+    deobfProvided "appeng:appliedenergistics2:rv5-stable-1:api"
+}
+jar {
+    manifest {
+        attributes 'FMLCorePlugin': 'com.forestbat.warhammer.asm.WarhammerLoader'
+        attributes 'FMLCorePluginContainsFMLMod': 'true'
+    }
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}

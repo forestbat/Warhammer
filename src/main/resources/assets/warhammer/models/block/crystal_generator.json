@@ -1,0 +1,9 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "blocks/crystal_generator",
+    "front": "blocks/crystal_generator",
+    "side": "blocks/crystal_generator"
+  }
+}
+

@@ -1,0 +1,8 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "blocks/generic_item_io",
+    "front": "blocks/generic_item_io",
+    "side": "blocks/generic_item_io"
+  }
+}

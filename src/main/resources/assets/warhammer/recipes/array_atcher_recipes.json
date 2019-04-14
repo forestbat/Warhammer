@@ -1,0 +1,10 @@
+{
+  "blast_array_fix": {
+    "array_slot": "warhammer:broken_blast_array",
+    "array_count": 64,
+    "material_slot": "minecraft:ender_pearl",
+    "material_count": 16,
+    "array_result": "warhammer:blast_array",
+    "result_count": 1
+  }
+}

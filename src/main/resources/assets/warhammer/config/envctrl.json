@@ -1,0 +1,113 @@
+{
+  "ocean": {
+    "temperature_item": "minecraft:coal",
+    "temperature_min_amount": 8,
+    "temperature_max_amount": 11,
+    "humidity_item": "wh.water_crystal",
+    "humidity_min_amount": 58,
+    "humidity_max_amount": 64,
+    "lives_item": "wh.wood_crystal",
+    "lives_min_amount": 14,
+    "lives_max_amount": 19,
+    "biome_result": 0
+  },
+  "plains": {
+    "temperature_item": "minecraft:coal",
+    "temperature_min_amount": 13,
+    "temperature_max_amount": 15,
+    "humidity_item": "wh.water_crystal",
+    "humidity_min_amount": 18,
+    "humidity_max_amount": 27,
+    "lives_item": "wh.wood_crystal",
+    "lives_min_amount": 22,
+    "lives_max_amount": 28,
+    "biome_result": 1
+  },
+  "desert":{
+  "temperature_item": "minecraft:coal",
+  "temperature_min_amount": 55,
+  "temperature_max_amount": 60,
+  "humidity_item": "wh.water_crystal",
+  "humidity_min_amount": 1,
+  "humidity_max_amount": 2,
+  "lives_item": "wh.wood_crystal",
+  "lives_min_amount": 1,
+  "lives_max_amount": 5,
+  "biome_result": 2
+  },
+  "extreme_hills": {
+    "temperature_item": "minecraft:coal",
+    "temperature_min_amount": 7,
+    "temperature_max_amount": 10,
+    "humidity_item": "wh.water_crystal",
+    "humidity_min_amount": 15,
+    "humidity_max_amount": 21,
+    "lives_item": "wh.wood_crystal",
+    "lives_min_amount": 20,
+    "lives_max_amount": 26,
+    "biome_result": 3
+  },
+  "forest": {
+    "temperature_item": "minecraft:coal",
+    "temperature_min_amount": 13,
+    "temperature_max_amount": 15,
+    "humidity_item": "wh.water_crystal",
+    "humidity_min_amount": 20,
+    "humidity_max_amount": 27,
+    "lives_item": "wh.wood_crystal",
+    "lives_min_amount": 24,
+    "lives_max_amount": 32,
+    "biome_result": 4
+  },
+  "taiga": {
+    "temperature_item": "minecraft:coal",
+    "temperature_min_amount": 5,
+    "temperature_max_amount": 7,
+    "humidity_item": "wh.water_crystal",
+    "humidity_min_amount": 14,
+    "humidity_max_amount": 16,
+    "lives_item": "wh.wood_crystal",
+    "lives_min_amount": 23,
+    "lives_max_amount": 27,
+    "biome_result": 5
+  },
+  "swampland": {
+    "temperature_item": "minecraft:coal",
+    "temperature_min_amount": 28,
+    "temperature_max_amount": 34,
+    "humidity_item": "wh.water_crystal",
+    "humidity_min_amount": 42,
+    "humidity_max_amount": 47,
+    "lives_item": "wh.wood_crystal",
+    "lives_min_amount": 39,
+    "lives_max_amount": 45,
+    "biome_result": 6
+  },
+  "river": {
+    "temperature_item": "minecraft:coal",
+    "temperature_min_amount": 13,
+    "temperature_max_amount": 15,
+    "humidity_item": "wh.water_crystal",
+    "humidity_min_amount": 57,
+    "humidity_max_amount": 63,
+    "lives_item": "wh.wood_crystal",
+    "lives_min_amount": 15,
+    "lives_max_amount": 16,
+    "biome_result": 7
+  },
+  "hell": {
+  "temperature_item": "wh.fire_crystal",
+  "temperature_min_amount": 16,
+  "temperature_max_amount": 18,
+  "humidity_item": "wh.water_crystal",
+  "humidity_min_amount": 0,
+  "humidity_max_amount": 0,
+  "lives_item": "wh.wood_crystal",
+  "lives_min_amount": 10,
+  "lives_max_amount": 14,
+  "biome_result": 8
+}
+}
+
+
+

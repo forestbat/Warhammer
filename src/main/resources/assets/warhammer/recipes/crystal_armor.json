@@ -1,0 +1,65 @@
+{
+  "type": "tools_forger",
+  "pattern": [
+    " ACA ",
+    "ATRTA",
+    "MAHAM",
+    " ASA ",
+    "AA AA"
+  ],
+  "key": {
+    "A": [
+      {
+        "item": "warhammer:alloy",
+        "count": 10,
+        "data": 0
+      }
+    ],
+    "C": [
+      {
+        "item": "warhammer:crystal_camera",
+        "count": 3,
+        "data": 0
+      }
+    ],
+    "H": [
+      {
+        "item": "warhammer:heart_protect_mirror",
+        "count": 3,
+        "data": 0
+      }
+    ],
+    "M": [
+      {
+        "item": "warhammer:mechanic_arm",
+        "count": 1,
+        "data": 0
+      }
+    ],
+    "R": [
+      {
+        "item": "warhammer:little_crystal_collider",
+        "count": 2,
+        "data": 0
+      }
+    ],
+    "S": [
+      {
+        "item": "warhammer:shield_generator",
+        "count": 1,
+        "data": 0
+      }
+    ],
+    "T": [
+      {
+        "item": "warhammer:turret",
+        "count": 1,
+        "data": 0
+      }
+    ]
+  },
+  "result": {
+    "item": "minecraft:bowl",
+    "count": 4
+  }
+}

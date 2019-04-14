@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "crystal_converter" },
+    "facing=south": { "model": "crystal_converter", "y": 180 },
+    "facing=west":  { "model": "crystal_converter", "y": 270 },
+    "facing=east":  { "model": "crystal_converter", "y": 90 }
+  }
+}
