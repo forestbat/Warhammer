@@ -33,6 +33,9 @@ repositories {
         name = "JEI"
         url = "modmaven.k-4u.nl"
     }
+    maven {
+        url = "http://dvs1.progwml6.com/files/maven"
+    }
     maven{
         name="industrial craft"
         url="http://maven.ic2.player.to/"
