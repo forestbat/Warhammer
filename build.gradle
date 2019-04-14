@@ -26,9 +26,9 @@ minecraft {
     // makeObfSourceJar = false 
 }
 repositories {
-    maven {
-        url = "http://dvs1.progwml6.com/files/maven"
-    }
+   maven {
+        url "http://maven.cil.li/"
+    }  
     maven {
         name = "JEI"
         url = "modmaven.k-4u.nl"
@@ -43,10 +43,10 @@ repositories {
 }
 
 dependencies {
-    //deobfProvided "vazkii.botania:Botania:r1.10-359.27:api"
+    deobfProvided "vazkii.botania:Botania:r1.10-359.27:api"
     deobfProvided "mezz.jei:jei_1.12.2:4.8.5.138:api"
     deobfProvided "net.industrial-craft:industrialcraft-2:2.8.84-ex112:api"
-    deobfProvided "appeng:appliedenergistics2:rv5-stable-1:api"
+    deobfProvided "appeng:appliedenergistics2:rv5-stable-11:api"
 }
 jar {
     manifest {
