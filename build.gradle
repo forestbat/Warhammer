@@ -31,11 +31,11 @@ repositories {
     }  
     maven {
         name = "jei"
-        url = "https://modmaven.k-4u.nl"
+        url = "http://modmaven.k-4u.nl"
     }
     maven {
         name="jei"
-        url = "https://dvs1.progwml6.com/files/maven"
+        url = "http://dvs1.progwml6.com/files/maven"
     }
     maven{
         name="industrial craft"
