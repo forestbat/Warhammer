@@ -6,12 +6,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.world.World;
 
 public class PlayerReinforcer extends EntityMachineBase {
     public static boolean MACHINE_IS_OPEN=true;
     public static boolean SUPER_STRONG=true;
-    public void playerReinforce(EntityMachineBase entityMachineBase, EntityPlayer entityPlayer){
+    public void playerReinforce(EntityPlayer entityPlayer){
         if(MACHINE_IS_OPEN){
             entityPlayer.capabilities.setFlySpeed(10);
             entityPlayer.capabilities.allowFlying=true;
@@ -21,7 +20,7 @@ public class PlayerReinforcer extends EntityMachineBase {
             if(SUPER_STRONG){
                 entityPlayer.getCooldownTracker().setCooldown(ItemStack.EMPTY.getItem(),1);
                 entityPlayer.getCooledAttackStrength(0);
-                entityPlayer.getEntityAttribute(new AttributeCellAnnihilateGun().getAttribute()).getBaseValue();
+                entityPlayer.getEntityAttribute(new AttributeCellAnnihilateGun(entityPlayer).getAttribute()).getBaseValue();
             }
         }
     }
