@@ -15,25 +15,28 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
-import java.io.DataInputStream;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static com.google.common.math.IntMath.pow;
-
 public class SpaceRings extends ToolsBase implements INBTSerializable<NBTBase> {
-    public static long[] STORAGE_TIER={pow(2,8),pow(2,16),pow(2,24),pow(2,32),pow(2,40)};
-    //private final Item item = new Item();
+    private int level;
+    private long storageTier;
     public Object2ObjectMap<Item,List<ItemStack>> itemStacks= new Object2ObjectOpenHashMap<>(2003);
     private NBTTagList nbtTagList=new NBTTagList();
-    NBTSizeTracker nbtSizeTracker=new NBTSizeTracker(16777216);
+    //NBTSizeTracker nbtSizeTracker=new NBTSizeTracker(16777216);
 
-    public SpaceRings(){
+    public SpaceRings(int level){
+       this.level=level;
        setMaxStackSize(1);
        setUnlocalizedName("space_ring");
        setCreativeTab(Warhammer.WARHAMMER);
     }
+    public long getStorageTier(){
+        storageTier=2<<(8*level);
+        return storageTier;
+    }
+
     @SuppressWarnings("unchecked")
     public Collection<ItemStack> getStack(){
         ObjectIterator<List<ItemStack>> itemStackIterator=itemStacks.values().iterator();
@@ -52,7 +55,6 @@ public class SpaceRings extends ToolsBase implements INBTSerializable<NBTBase> {
     }
     public ItemStack input(ItemStack itemStack, int amount){
         List<ItemStack> otherStackList=itemStacks.get(itemStack.getItem());
-        for(long storageTier:STORAGE_TIER)
           for(ItemStack otherStack:otherStackList) {
               if (isEqual(itemStack,otherStack)&&getStored()+amount<=storageTier) {
                   otherStack.grow(amount);

@@ -3,7 +3,7 @@ package com.forestbat.warhammer.tileentity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-import static com.forestbat.warhammer.Warhammer.Items.FireCrystal;
+import static com.forestbat.warhammer.Warhammer.Items.FIRE_CRYSTAL;
 
 public class LittleCrystalBurner extends EntityMachineBase {
     private int BURNER_MAX_STORE=50000;
@@ -21,7 +21,7 @@ public class LittleCrystalBurner extends EntityMachineBase {
         super.readFromNBT(compound);
     }
     public void update(){
-        if(crystalStack==FireCrystal.getDefaultInstance() &&crystalStack.getCount()>0) {
+        if(crystalStack== FIRE_CRYSTAL.getDefaultInstance() &&crystalStack.getCount()>0) {
             receiveEnergy(5,false);
             if(world.getWorldTime()%100==0) {
                 crystalStack.shrink(1);

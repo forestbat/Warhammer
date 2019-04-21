@@ -5,33 +5,39 @@ import com.forestbat.warhammer.tileentity.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
 public class BlockMachineBase extends Block implements ITileEntityProvider, IInteractionObject {
+    public final int meta;
     public BlockMachineBase(int meta){
         super(Material.ROCK);
         setHardness(1000);
         setResistance(1000);
         setLightLevel(15);
         setCreativeTab(Warhammer.WARHAMMER);
+        this.meta=meta;
     }
-    public TileEntity createNewTileEntity(World worldIn,int meta){
-        switch (meta){
+    public TileEntity createNewTileEntity(@Nonnull World worldIn,int meta){
+        switch (this.meta){
             case 1:return new ArrayEtcher();
             case 2:return new CrystalGenerator();
             case 3:return new LittleCrystalBurner();
@@ -44,6 +50,7 @@ public class BlockMachineBase extends Block implements ITileEntityProvider, IInt
             case 10:return new SpaceRingReader();
             case 11:return new Turret();
             case 12:return new CrystalChest();
+            case 13:return new EnvironmentController();
             default:return new EntityMachineBase();
         }
     }
@@ -60,9 +67,9 @@ public class BlockMachineBase extends Block implements ITileEntityProvider, IInt
     public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         if(te!=null) {
             NBTTagCompound nbtTagCompound = new NBTTagCompound();
-            nbtTagCompound.setTag("Tile", te.serializeNBT());
+            NBTTagCompound saveNBT=ItemStackHelper.saveAllItems(nbtTagCompound,new NonNullList<>(),true);
             ItemStack itemStack = new ItemStack(this);
-            itemStack.writeToNBT(nbtTagCompound);
+            itemStack.writeToNBT(saveNBT);
             EntityItem entityItem=new EntityItem(worldIn,player.posX,player.posY,player.posZ,itemStack);
             entityItem.setInfinitePickupDelay();
             entityItem.setEntityInvulnerable(true);

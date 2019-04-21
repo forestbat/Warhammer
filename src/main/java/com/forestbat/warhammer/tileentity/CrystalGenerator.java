@@ -44,7 +44,7 @@ public class CrystalGenerator extends EntityMachineBase implements IItemHandler,
     public void generateNewItem(int index){
         ItemStack itemStack=getStackInSlot(index);
         List<Item> crystalList= Lists.newArrayList
-                (FireCrystal,WaterCrystal,WoodCrystal,GoldCrystal,SoilCrystal);
+                (FIRE_CRYSTAL, WATER_CRYSTAL, WOOD_CRYSTAL, GOLD_CRYSTAL, SOIL_CRYSTAL);
         if(crystalList.contains(itemStack.getItem())){
             itemStack.grow(3+new Random().nextInt(2));
         }

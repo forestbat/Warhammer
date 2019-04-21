@@ -3,7 +3,6 @@ package com.forestbat.warhammer.tileentity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-import static com.forestbat.warhammer.Warhammer.*;
 import static com.forestbat.warhammer.Warhammer.Items.*;
 
 public class LittleCrystalCollider extends EntityMachineBase {
@@ -13,17 +12,17 @@ public class LittleCrystalCollider extends EntityMachineBase {
     private int SecondAmount=crystalSecond.getCount();
     public int differentCrystalPower(){
         //todo too many if
-        if(crystalFirst== FireCrystal.getDefaultInstance() && crystalSecond== WaterCrystal.getDefaultInstance())
+        if(crystalFirst== FIRE_CRYSTAL.getDefaultInstance() && crystalSecond== WATER_CRYSTAL.getDefaultInstance())
             return 100;
-        if(crystalFirst== FireCrystal.getDefaultInstance() && crystalSecond==WoodCrystal.getDefaultInstance())
+        if(crystalFirst== FIRE_CRYSTAL.getDefaultInstance() && crystalSecond== WOOD_CRYSTAL.getDefaultInstance())
             return 78;
-        if(crystalFirst== FireCrystal.getDefaultInstance() && crystalSecond== GoldCrystal.getDefaultInstance())
+        if(crystalFirst== FIRE_CRYSTAL.getDefaultInstance() && crystalSecond== GOLD_CRYSTAL.getDefaultInstance())
             return 94;
-        if(crystalFirst== FireCrystal.getDefaultInstance() &&crystalSecond== FireCrystal.getDefaultInstance())
+        if(crystalFirst== FIRE_CRYSTAL.getDefaultInstance() &&crystalSecond== FIRE_CRYSTAL.getDefaultInstance())
             return 120;
-        if(crystalFirst== FireCrystal.getDefaultInstance() &&crystalSecond== SoilCrystal.getDefaultInstance())
+        if(crystalFirst== FIRE_CRYSTAL.getDefaultInstance() &&crystalSecond== SOIL_CRYSTAL.getDefaultInstance())
             return 60;
-        if(crystalFirst== GoldCrystal.getDefaultInstance() &&crystalSecond==WoodCrystal.getDefaultInstance())
+        if(crystalFirst== GOLD_CRYSTAL.getDefaultInstance() &&crystalSecond== WOOD_CRYSTAL.getDefaultInstance())
             return 88;
         else return 0;
     }

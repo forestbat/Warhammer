@@ -10,12 +10,12 @@ import javax.annotation.Nonnull;
 import static com.forestbat.warhammer.Warhammer.Items.*;
 
 public class ArrayEtcher extends EntityMachineBase implements IRecipe {
-    private static Item[] WarHammerArrays=new Item[]{BlastArray,CalcArray,
-            EnderArray,EternalArray,SharpArray,ShieldArray,
-            SpaceArray,StableArray};
-    private static Item[] BrokenWarHammerArrays=new Item[]{BrokenBlastArray, /*BrokenCalcArray,*/
-            BrokenEnderArray,BrokenEternalArray,BrokenSharpArray,BrokenShieldArray,
-            BrokenSpaceArray,BrokenStableArray};
+    private static Item[] WarHammerArrays=new Item[]{ BLAST_ARRAY, CALC_ARRAY,
+        ENDER_ARRAY, ETERNAL_ARRAY, SHARP_ARRAY, SHIELD_ARRAY,
+        SPACE_ARRAY, STABLE_ARRAY };
+    private static Item[] BrokenWarHammerArrays=new Item[]{ BROKEN_BLAST_ARRAY, /*BROKEN_CALC_ARRAY,*/
+        BROKEN_ENDER_ARRAY, BROKEN_ETERNAL_ARRAY, BROKEN_SHARP_ARRAY, BROKEN_SHIELD_ARRAY,
+        BROKEN_SPACE_ARRAY, BROKEN_STABLE_ARRAY };
     public boolean matches(@Nonnull InventoryCrafting inventoryCrafting, @Nonnull World world){
         return true;
     }

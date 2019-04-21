@@ -8,7 +8,7 @@ import ic2.api.energy.tile.IEnergySource;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.common.Optional;
-//import vazkii.botania.api.mana.IManaPool;
+import vazkii.botania.api.mana.IManaPool;
 
 import static com.forestbat.warhammer.configs.WarhammerConfig.*;
 import static com.google.common.math.IntMath.pow;
@@ -28,14 +28,14 @@ public class EnergyCompat {
         }
     }
 
-    /*@Optional.Method(modid = "botania")
+    @Optional.Method(modid = "botania")
     public void botaniaEnergyConvert(PipesConnector pipesConnector,TileEntity tileEntity){
         if(pipesConnector.isConnectedWith(tileEntity)&&tileEntity instanceof IManaPool) {
             int manaAccept = Math.min(pipesConnector.getMaxEnergyStored() * WithMana, ((IManaPool)tileEntity).getCurrentMana());
             pipesConnector.extractEnergy(manaAccept,false);
             ((IManaPool)tileEntity).recieveMana(manaAccept);
         }
-    }*/
+    }
 
     @Optional.Method(modid = "redstoneflux")
     public void rfEnergyConvert(PipesConnector pipesConnector,TileEntity tileEntity){
