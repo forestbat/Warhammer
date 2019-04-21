@@ -26,6 +26,10 @@ minecraft {
 }
 repositories {
    maven {
+        name= "forge"
+        url = "http://files.minecraftforge.net/maven" 
+   }
+   maven {
         name="applied energistics 2"
         url="http://maven.cil.li/"
     }  
