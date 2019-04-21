@@ -5,6 +5,7 @@ import com.forestbat.warhammer.items.itemtools.SpaceRings;
 import jline.internal.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.tileentity.TileEntity;
@@ -34,12 +35,12 @@ public class PipesConnector extends EntityMachineBase {
             BlockPos middle = blockPosIterator.next();
             //todo if(dest==null);
             if (neighBoor) return true;
-            if (world.getBlockState(middle).getBlock().equals(Warhammer.Blocks.Pipeline) || world.getTileEntity(middle) instanceof PipesConnector) {
-                if (world.getBlockState(middle.up()).getBlock().equals(Warhammer.Blocks.Pipeline) || world.getBlockState(middle.down()).getBlock().equals(Warhammer.Blocks.Pipeline))
+            if (world.getBlockState(middle).getBlock().equals(Warhammer.Blocks.PIPELINE) || world.getTileEntity(middle) instanceof PipesConnector) {
+                if (world.getBlockState(middle.up()).getBlock().equals(Warhammer.Blocks.PIPELINE) || world.getBlockState(middle.down()).getBlock().equals(Warhammer.Blocks.PIPELINE))
                     yAspect += 1;
-                if (world.getBlockState(middle.west()).getBlock().equals(Warhammer.Blocks.Pipeline) || world.getBlockState(middle.east()).getBlock().equals(Warhammer.Blocks.Pipeline))
+                if (world.getBlockState(middle.west()).getBlock().equals(Warhammer.Blocks.PIPELINE) || world.getBlockState(middle.east()).getBlock().equals(Warhammer.Blocks.PIPELINE))
                     xAspect += 1;
-                if (world.getBlockState(middle.north()).getBlock().equals(Warhammer.Blocks.Pipeline) || world.getBlockState(middle.south()).getBlock().equals(Warhammer.Blocks.Pipeline))
+                if (world.getBlockState(middle.north()).getBlock().equals(Warhammer.Blocks.PIPELINE) || world.getBlockState(middle.south()).getBlock().equals(Warhammer.Blocks.PIPELINE))
                     zAspect += 1;
                 if (world.getTileEntity(middle.up()) instanceof PipesConnector || world.getTileEntity(middle.down()) instanceof PipesConnector)
                     yAspect += 1;
@@ -62,10 +63,12 @@ public class PipesConnector extends EntityMachineBase {
             }
         }
     }
-    public void autoSpawnStone(PipesConnector pipesConnector,SpaceRingReader spaceRingReader){
-        SpaceRings spaceRings=new SpaceRings();
-        if(canSpawnStone&&isConnectedWith(spaceRingReader)){
-            spaceRings.input(new ItemStack(Blocks.STONE),1);
+    public void autoSpawnStone(SpaceRingReader spaceRingReader) {
+        Item spaceRings = spaceRingReader.inv.get(0).getItem();
+        if (spaceRings instanceof SpaceRings) {
+            if (canSpawnStone && isConnectedWith(spaceRingReader)) {
+                ((SpaceRings)spaceRings).input(new ItemStack(Blocks.STONE), 1);
+            }
         }
     }
     public void autoTransport(EntityPlayer player,TileEntity dest){

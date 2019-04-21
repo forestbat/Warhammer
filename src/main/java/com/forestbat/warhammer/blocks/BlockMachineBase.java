@@ -5,7 +5,6 @@ import com.forestbat.warhammer.tileentity.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -67,7 +66,7 @@ public class BlockMachineBase extends Block implements ITileEntityProvider, IInt
     public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         if(te!=null) {
             NBTTagCompound nbtTagCompound = new NBTTagCompound();
-            NBTTagCompound saveNBT=ItemStackHelper.saveAllItems(nbtTagCompound,new NonNullList<>(),true);
+            NBTTagCompound saveNBT=ItemStackHelper.saveAllItems(nbtTagCompound,NonNullList.create(),true);
             ItemStack itemStack = new ItemStack(this);
             itemStack.writeToNBT(saveNBT);
             EntityItem entityItem=new EntityItem(worldIn,player.posX,player.posY,player.posZ,itemStack);
