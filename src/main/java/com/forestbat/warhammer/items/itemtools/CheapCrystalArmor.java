@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 
+@Deprecated
 public class CheapCrystalArmor extends ToolsBase {
     public int MAX_CHEAP_ARMOR_ENERGY=640000;
 

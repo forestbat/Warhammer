@@ -15,7 +15,7 @@ public class WarhammerJeiPlugin implements IModPlugin,IRecipeWrapperFactory<Warh
     public void register(IModRegistry registry) {
         iJeiHelpers=registry.getJeiHelpers();
         iJeiHelpers.getVanillaRecipeFactory();
-        registry.addRecipeClickArea(GuiContainer.class,40,40,60,60);
+        registry.addRecipeClickArea(GuiContainer.class,40,40,60,60,"Tools_Forger");
         registry.handleRecipes(WarhammerJeiPlugin.class,new WarhammerJeiPlugin(),"Tools_Forger");
     }
 

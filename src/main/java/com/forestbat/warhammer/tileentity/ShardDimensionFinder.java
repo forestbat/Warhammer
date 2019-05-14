@@ -12,12 +12,12 @@ import java.util.Random;
 import static com.forestbat.warhammer.configs.WarhammerConfig.*;
 
 public class ShardDimensionFinder extends EntityMachineBase implements ITickable {
-    private String dimensionid;
+    private String dimension_id=null;
 
     public boolean generateNewWorld() {
         int generateWorldAmount=0;
-        if (getEnergyStored() > 1e9 && dimensionid!=null) {
-            DimensionManager.registerDimension(dimensionid.hashCode(), DimensionType.OVERWORLD);
+        if (getEnergyStored() > 1e9 && dimension_id !=null) {
+            DimensionManager.registerDimension(dimension_id.hashCode(), DimensionType.OVERWORLD);
             generateWorldAmount+=1;
             markDirty();
         }
@@ -25,7 +25,7 @@ public class ShardDimensionFinder extends EntityMachineBase implements ITickable
     }
 
     public void setDimensionInfo(Random rand, World world) {
-        if (world.provider.getDimension() == dimensionid.hashCode()) {
+        if (world.provider.getDimension() == dimension_id.hashCode()) {
             world.getWorldInfo().setBorderSize(rand.nextInt(DIMENSION_BORDER_LENGTH) + 16);
             switch (rand.nextInt(10)) {
                 case 3:world.getWorldInfo().setDifficulty(EnumDifficulty.NORMAL);

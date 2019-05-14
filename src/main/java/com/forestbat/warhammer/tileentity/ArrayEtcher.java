@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 import static com.forestbat.warhammer.Warhammer.Items.*;
 
 public class ArrayEtcher extends EntityMachineBase implements IRecipe {
-    private static Item[] WarHammerArrays=new Item[]{ BLAST_ARRAY, CALC_ARRAY,
+    private static Item[] WarHammerArrays=new Item[]{ BLAST_ARRAY,CALC_ARRAY,
         ENDER_ARRAY, ETERNAL_ARRAY, SHARP_ARRAY, SHIELD_ARRAY,
         SPACE_ARRAY, STABLE_ARRAY };
     private static Item[] BrokenWarHammerArrays=new Item[]{ BROKEN_BLAST_ARRAY, /*BROKEN_CALC_ARRAY,*/

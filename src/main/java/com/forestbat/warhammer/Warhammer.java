@@ -12,6 +12,7 @@ import com.forestbat.warhammer.tileentity.*;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.creativetab.CreativeTabs;
@@ -21,7 +22,11 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.model.BakedItemModel;
+import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -31,6 +36,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.IOException;
 
 @Mod(
         modid = Warhammer.MOD_ID,
@@ -86,7 +93,7 @@ public class Warhammer {
 
     }
 
-    //@GameRegistry.ObjectHolder(MOD_ID)
+    @GameRegistry.ObjectHolder(MOD_ID)
     public static class Blocks {
         public static final Block PIPELINE=new Block(Material.ROCK);
         public static final Block ARRAY_ETCHER=new BlockMachineBase(1);
@@ -134,8 +141,8 @@ public class Warhammer {
 
         @GameRegistry.ObjectHolder("broken_blast_array")
         public static final Item BROKEN_BLAST_ARRAY =new Item();
-        @GameRegistry.ObjectHolder("broken_calc_array")
-        public static final Item BROKEN_CALC_ARRAY =new Item();
+        //@GameRegistry.ObjectHolder("broken_calc_array")
+        //public static final Item BROKEN_CALC_ARRAY =new Item();
         @GameRegistry.ObjectHolder("broken_ender_array")
         public static final Item BROKEN_ENDER_ARRAY =new Item();
         @GameRegistry.ObjectHolder("broken_eternal_array")
@@ -170,6 +177,12 @@ public class Warhammer {
         public static final Item CLIP =new Item();
         @GameRegistry.ObjectHolder("cartridge_bag")
         public static final Item CARTRIDGE_BAG =new Item();
+        @GameRegistry.ObjectHolder("crystal_camera")
+        public static final Item CRYSTAL_CAMERA=new CrystalCamera(ItemArmor.ArmorMaterial.GOLD,2, EntityEquipmentSlot.HEAD);
+        @GameRegistry.ObjectHolder("heart_protect_mirror")
+        public static final Item HEART_PROTECT_MIRROR=new HeartProtectMirror();
+        @GameRegistry.ObjectHolder("armor_plate")
+        public static final Item ARMOR_PLATE=new ArmorPlate();
 
         @GameRegistry.ObjectHolder("chain_sword")
         public static final Item CHAIN_SWORD=new ChainSword();
@@ -194,6 +207,43 @@ public class Warhammer {
 		@GameRegistry.ObjectHolder("space_ring_tier5")
 		public static final Item SPACE_RING_TIER_5=new SpaceRings(5);
 
+		@GameRegistry.ObjectHolder("fire_bomb")
+        public static final Item FIRE_BOMB=new FireBomb();
+		@GameRegistry.ObjectHolder("fish_bomb")
+        public static final Item FISH_BOMB=new FishBomb();
+		@GameRegistry.ObjectHolder("ore_finder_bomb")
+        public static final Item ORE_FIND_BOMB=new OreFinderBomb();
+		@GameRegistry.ObjectHolder("sky_roar_bomb")
+        public static final Item SKY_ROAR_BOMB=new SkyRoarBomb();
+		@GameRegistry.ObjectHolder("void_bomb")
+        public static final Item VOID_BOMB=new VoidBomb();
+
+		@GameRegistry.ObjectHolder("array_etcher")
+        public static final ItemBlock ARRAY_ETCHER=new ItemBlock(Blocks.ARRAY_ETCHER);
+		@GameRegistry.ObjectHolder("crystal_chest")
+        public static final ItemBlock CRYSTAL_CHEST=new ItemBlock(Blocks.CRYSTAL_CHEST);
+		@GameRegistry.ObjectHolder("crystal_converter")
+        public static final ItemBlock CRYSTAL_CONVERTER=new ItemBlock(Blocks.CRYSTAL_CONVERTER);
+		@GameRegistry.ObjectHolder("crystal_generator")
+        public static final ItemBlock CRYSTAL_GENERATOR=new ItemBlock(Blocks.CRYSTAL_GENERATOR);
+		@GameRegistry.ObjectHolder("environment_controller")
+        public static final ItemBlock ENVIRONMENT_CONTROLLER=new ItemBlock(Blocks.ENVIRONMENT_CONTROLLER);
+		@GameRegistry.ObjectHolder("little_crystal_burner")
+        public static final ItemBlock LITTLE_CRYSTAL_BURNER=new ItemBlock(Blocks.LITTLE_CRYSTAL_BURNER);
+		@GameRegistry.ObjectHolder("little_crystal_collider")
+        public static final ItemBlock LITTLE_CRYSTAL_COLLIDER=new ItemBlock(Blocks.LITTLE_CRYSTAL_COLLIDER);
+		@GameRegistry.ObjectHolder("pipes_generator")
+        public static final ItemBlock PIPES_CONNECTOR=new ItemBlock(Blocks.PIPES_CONNECTOR);
+		@GameRegistry.ObjectHolder("player_reinforcer")
+        public static final ItemBlock PLAYER_REINFORCER=new ItemBlock(Blocks.PLAYER_REINFOCER);
+		@GameRegistry.ObjectHolder("shard_dimension_finder")
+        public static final ItemBlock SHARD_DIMENSION_FINDER=new ItemBlock(Blocks.SHARD_DIMENSION_FINDER);
+		@GameRegistry.ObjectHolder("shield_generator")
+        public static final ItemBlock SHIELD_GENERATOR=new ItemBlock(Blocks.SHIELD_GENERATOR);
+		@GameRegistry.ObjectHolder("tools_forger")
+        public static final ItemBlock SPACE_RING_READER=new ItemBlock(Blocks.SPACE_RING_READER);
+		@GameRegistry.ObjectHolder("turret")
+        public static final ItemBlock TURRET=new ItemBlock(Blocks.TURRET);
     }
 
     @SubscribeEvent
@@ -207,6 +257,32 @@ public class Warhammer {
         ModelLoader.setCustomStateMapper(new BlockMachineBase(1), new StateMap.Builder().build());
     }
 
+    @SubscribeEvent
+    public void registerModels(ModelBakeEvent event){
+        try {
+            final ModelResourceLocation bakedLocation = new ModelResourceLocation(
+               Items.ARMOR_PLATE.getRegistryName(), "normal");
+            final IBakedModel baked = event.getModelRegistry().getObject(bakedLocation);
+            event.getModelRegistry().putObject(bakedLocation, baked);
+
+            final ModelResourceLocation itemLocation = new ModelResourceLocation(
+                new ResourceLocation("huntingdim", "frame"), "inventory");
+            final IBakedModel bakedItem = event.getModelRegistry().getObject(itemLocation);
+            event.getModelRegistry().putObject(itemLocation, bakedItem);
+        }catch(Exception e){
+            LOGGER.error(e.getMessage());
+        }
+    }
+
+    //@SubscribeEvent
+    public static void easyItemRegister(RegistryEvent.Register<Item> registryEvent,Item item,String rlname){
+        registryEvent.getRegistry().register(item.setRegistryName(rlname).setCreativeTab(WARHAMMER).setUnlocalizedName(rlname));
+    }
+
+    //@SubscribeEvent
+    public static void easyBlockRegister(RegistryEvent.Register<Block> registryEvent,Block block,String rlname){
+        registryEvent.getRegistry().register(block.setRegistryName(rlname).setCreativeTab(WARHAMMER).setUnlocalizedName(rlname));
+    }
     /**
      * This is a special class that listens to registry events, to allow creation of mod blocks and items at the proper time.
      */
@@ -215,57 +291,68 @@ public class Warhammer {
         @SubscribeEvent
         public static void addItems(RegistryEvent.Register<Item> event) {
            if(WarhammerConfig.registerAllItems) {
-               event.getRegistry().register(Items.GOLD_CRYSTAL.setRegistryName(MOD_ID,"gold_crystal").setCreativeTab(WARHAMMER).setUnlocalizedName("gold_crystal"));
-               event.getRegistry().register(Items.WOOD_CRYSTAL.setRegistryName(MOD_ID,"wood_crystal").setCreativeTab(WARHAMMER).setUnlocalizedName("wood_crystal"));
-               event.getRegistry().register(Items.WATER_CRYSTAL.setRegistryName(MOD_ID,"water_crystal").setCreativeTab(WARHAMMER).setUnlocalizedName("water_crystal"));
-               event.getRegistry().register(Items.FIRE_CRYSTAL.setRegistryName(MOD_ID,"fire_crystal").setCreativeTab(WARHAMMER).setUnlocalizedName("fire_crystal"));
-               event.getRegistry().register(Items.SOIL_CRYSTAL.setRegistryName(MOD_ID,"soil_crystal").setCreativeTab(WARHAMMER).setUnlocalizedName("soil_crystal"));
-               event.getRegistry().register(Items.THUNDER_CRYSTAL.setRegistryName(MOD_ID,"thunder_crystal").setCreativeTab(WARHAMMER).setUnlocalizedName("thunder_crystal"));
+               Warhammer.easyItemRegister(event,Items.GOLD_CRYSTAL,"gold_crystal");
+               Warhammer.easyItemRegister(event,Items.WOOD_CRYSTAL,"wood_crystal");
+               Warhammer.easyItemRegister(event,Items.WATER_CRYSTAL,"water_crystal");
+               Warhammer.easyItemRegister(event,Items.FIRE_CRYSTAL,"fire_crystal");
+               Warhammer.easyItemRegister(event,Items.SOIL_CRYSTAL,"soil_crystal");
+               Warhammer.easyItemRegister(event,Items.THUNDER_CRYSTAL,"thunder_crystal");
 
-               event.getRegistry().register(Items.BROKEN_BLAST_ARRAY.setRegistryName(MOD_ID,"broken_blast_array").setCreativeTab(WARHAMMER).setUnlocalizedName("broken_blast_array"));
-               event.getRegistry().register(Items.BROKEN_CALC_ARRAY.setRegistryName(MOD_ID,"broken_calc_array").setCreativeTab(WARHAMMER).setUnlocalizedName("broken_calc_array"));
-               event.getRegistry().register(Items.BROKEN_ENDER_ARRAY.setRegistryName(MOD_ID,"broken_calc_array").setCreativeTab(WARHAMMER).setUnlocalizedName("broken_calc_array"));
-               event.getRegistry().register(Items.BROKEN_ETERNAL_ARRAY.setRegistryName(MOD_ID,"broken_eternal_array").setCreativeTab(WARHAMMER).setUnlocalizedName("broken_eternal_array"));
-               event.getRegistry().register(Items.BROKEN_SHARP_ARRAY.setRegistryName(MOD_ID,"broken_sharp_array").setCreativeTab(WARHAMMER).setUnlocalizedName("broken_sharp_array"));
-               event.getRegistry().register(Items.BROKEN_SHIELD_ARRAY.setRegistryName(MOD_ID,"broken_shield_array").setCreativeTab(WARHAMMER).setUnlocalizedName("broken_shield_array"));
-               event.getRegistry().register(Items.BROKEN_SPACE_ARRAY.setRegistryName(MOD_ID,"broken_space_array").setCreativeTab(WARHAMMER).setUnlocalizedName("broken_space_array"));
-               event.getRegistry().register(Items.BROKEN_STABLE_ARRAY.setRegistryName(MOD_ID,"broken_stable_array").setCreativeTab(WARHAMMER).setUnlocalizedName("broken_stable_array"));
+               Warhammer.easyItemRegister(event,Items.BROKEN_BLAST_ARRAY,"broken_blast_array");
+               //Warhammer.easyItemRegister(event,Items.BROKEN_CALC_ARRAY,"broken_calc_array");
+               Warhammer.easyItemRegister(event,Items.BROKEN_ENDER_ARRAY,"broken_calc_array");
+               Warhammer.easyItemRegister(event,Items.BROKEN_ETERNAL_ARRAY,"broken_eternal_array");
+               Warhammer.easyItemRegister(event,Items.BROKEN_SHARP_ARRAY,"broken_sharp_array");
+               Warhammer.easyItemRegister(event,Items.BROKEN_SHIELD_ARRAY,"broken_shield_array");
+               Warhammer.easyItemRegister(event,Items.BROKEN_SPACE_ARRAY,"broken_space_array");
+               Warhammer.easyItemRegister(event,Items.BROKEN_STABLE_ARRAY,"broken_stable_array");
 
-               event.getRegistry().register(Items.BLAST_ARRAY.setRegistryName(MOD_ID,"blast_array").setCreativeTab(WARHAMMER).setUnlocalizedName("blast_array"));
-               event.getRegistry().register(Items.CALC_ARRAY.setRegistryName(MOD_ID,"calc_array").setCreativeTab(WARHAMMER).setUnlocalizedName("calc_array"));
-               event.getRegistry().register(Items.ENDER_ARRAY.setRegistryName(MOD_ID,"ender_array").setCreativeTab(WARHAMMER).setUnlocalizedName("ender_array"));
-               event.getRegistry().register(Items.ETERNAL_ARRAY.setRegistryName(MOD_ID,"eternal_array").setCreativeTab(WARHAMMER).setUnlocalizedName("eternal_array"));
-               event.getRegistry().register(Items.SHARP_ARRAY.setRegistryName(MOD_ID,"sharp_array").setCreativeTab(WARHAMMER).setUnlocalizedName("sharp_array"));
-               event.getRegistry().register(Items.SHIELD_ARRAY.setRegistryName(MOD_ID,"shield_array").setCreativeTab(WARHAMMER).setUnlocalizedName("shield_array"));
-               event.getRegistry().register(Items.SPACE_ARRAY.setRegistryName(MOD_ID,"space_array").setCreativeTab(WARHAMMER).setUnlocalizedName("space_array"));
-               event.getRegistry().register(Items.STABLE_ARRAY.setRegistryName(MOD_ID,"stable_array").setCreativeTab(WARHAMMER).setUnlocalizedName("stable_array"));
+               Warhammer.easyItemRegister(event,Items.BLAST_ARRAY,"blast_array");
+               Warhammer.easyItemRegister(event,Items.CALC_ARRAY,"calc_array");
+               Warhammer.easyItemRegister(event,Items.ENDER_ARRAY,"ender_array");
+               Warhammer.easyItemRegister(event,Items.ETERNAL_ARRAY,"eternal_array");
+               Warhammer.easyItemRegister(event,Items.SHARP_ARRAY,"sharp_array");
+               Warhammer.easyItemRegister(event,Items.SHIELD_ARRAY,"shield_array");
+               Warhammer.easyItemRegister(event,Items.SPACE_ARRAY,"space_array");
+               Warhammer.easyItemRegister(event,Items.STABLE_ARRAY,"stable_array");
 
-               event.getRegistry().register(new HeartProtectMirror().setRegistryName(MOD_ID,"heart_protect_mirror").setCreativeTab(WARHAMMER).setUnlocalizedName("heart_protect_mirror"));
-               event.getRegistry().register(new CrystalCamera(ItemArmor.ArmorMaterial.GOLD,2, EntityEquipmentSlot.HEAD).
-                       setRegistryName(MOD_ID,"crystal_camera").setCreativeTab(WARHAMMER).setUnlocalizedName("crystal_camera"));
-               event.getRegistry().register(new ArmorPlate().setRegistryName(MOD_ID,"armor_plate").setCreativeTab(WARHAMMER).setUnlocalizedName("armor_plate"));
-               event.getRegistry().register(Items.CLIP.setRegistryName(MOD_ID,"clip").setMaxDamage(12800).setCreativeTab(WARHAMMER).setUnlocalizedName("clip"));
-               event.getRegistry().register(Items.CARTRIDGE_BAG.setRegistryName(MOD_ID,"cartridge_bag").setMaxDamage(64000).setCreativeTab(WARHAMMER).setUnlocalizedName("cartridge_bag"));
+               Warhammer.easyItemRegister(event,Items.HEART_PROTECT_MIRROR,"heart_protect_mirror");
+               Warhammer.easyItemRegister(event,Items.CRYSTAL_CAMERA,"crystal_camera");
+               Warhammer.easyItemRegister(event,Items.ARMOR_PLATE,"armor_plate");
+               Warhammer.easyItemRegister(event,Items.CLIP.setMaxDamage(12800),"clip");
+               Warhammer.easyItemRegister(event,Items.CARTRIDGE_BAG.setMaxDamage(64000),"cartridge_bag");
 
-               event.getRegistry().register(Items.CHAIN_SWORD.setRegistryName(MOD_ID,"chain_sword").setCreativeTab(WARHAMMER).setUnlocalizedName("chain_sword"));
-               event.getRegistry().register(Items.CRYSTAL_ARMOR.setRegistryName(MOD_ID,"crystal_armor").setCreativeTab(WARHAMMER).setUnlocalizedName("crystal_armor"));
-               event.getRegistry().register(Items.ELECTRIC_HEAT_EXE.setRegistryName(MOD_ID,"electric_heat_axe").setCreativeTab(WARHAMMER).setUnlocalizedName("electric_heat_axe"));
-               event.getRegistry().register(Items.FIRE_PYTHON_HEAVY_GUN.setRegistryName(MOD_ID,"fire_python_heavy_gun").setCreativeTab(WARHAMMER).setUnlocalizedName("fire_python_heavy_gun"));
-               event.getRegistry().register(Items.LIGHT_AND_FIRE_SABRE.setRegistryName(MOD_ID,"light_fire_sabre").setCreativeTab(WARHAMMER).setUnlocalizedName("light_fire_sabre"));
-               event.getRegistry().register(Items.SHAKE_SABRE.setRegistryName(MOD_ID,"shake_sabre").setCreativeTab(WARHAMMER).setUnlocalizedName("shake_sabre"));
-               event.getRegistry().register(Items.SPACE_RING_TIER_1.setRegistryName(MOD_ID,"space_ring_tier1").setCreativeTab(WARHAMMER).setUnlocalizedName("space_ring_tier1"));
-			   event.getRegistry().register(Items.SPACE_RING_TIER_2.setRegistryName(MOD_ID,"space_ring_tier2").setCreativeTab(WARHAMMER).setUnlocalizedName("space_ring_tier2"));
-			   event.getRegistry().register(Items.SPACE_RING_TIER_3.setRegistryName(MOD_ID,"space_ring_tier3").setCreativeTab(WARHAMMER).setUnlocalizedName("space_ring_tier4"));
-			   event.getRegistry().register(Items.SPACE_RING_TIER_4.setRegistryName(MOD_ID,"space_ring_tier4").setCreativeTab(WARHAMMER).setUnlocalizedName("space_ring_tier4"));
-			   event.getRegistry().register(Items.SPACE_RING_TIER_5.setRegistryName(MOD_ID,"space_ring_tier5").setCreativeTab(WARHAMMER).setUnlocalizedName("space_ring_tier5"));
+               Warhammer.easyItemRegister(event,Items.CHAIN_SWORD,"chain_sword");
+               Warhammer.easyItemRegister(event,Items.CRYSTAL_ARMOR,"crystal_armor");
+               Warhammer.easyItemRegister(event,Items.ELECTRIC_HEAT_EXE,"electric_heat_axe");
+               Warhammer.easyItemRegister(event,Items.FIRE_PYTHON_HEAVY_GUN,"fire_python_heavy_gun");
+               Warhammer.easyItemRegister(event,Items.LIGHT_AND_FIRE_SABRE,"light_fire_sabre");
+               Warhammer.easyItemRegister(event,Items.SHAKE_SABRE,"shake_sabre");
+               Warhammer.easyItemRegister(event,Items.SPACE_RING_TIER_1,"space_ring_tier1");
+			   Warhammer.easyItemRegister(event,Items.SPACE_RING_TIER_2,"space_ring_tier2");
+			   Warhammer.easyItemRegister(event,Items.SPACE_RING_TIER_3,"space_ring_tier3");
+			   Warhammer.easyItemRegister(event,Items.SPACE_RING_TIER_4,"space_ring_tier4");
+			   Warhammer.easyItemRegister(event,Items.SPACE_RING_TIER_5,"space_ring_tier5");
 
-               event.getRegistry().register(new OreFinderBomb().setRegistryName(MOD_ID,"ore_finder_bomb").setCreativeTab(WARHAMMER).setUnlocalizedName("ore_finder_bomb"));
-               event.getRegistry().register(new FireBomb().setRegistryName(MOD_ID,"fire_bomb").setCreativeTab(WARHAMMER).setUnlocalizedName("fire_bomb"));
-               event.getRegistry().register(new FishBomb().setRegistryName(MOD_ID,"fish_bomb").setCreativeTab(WARHAMMER).setUnlocalizedName("fish_bomb"));
-               event.getRegistry().register(new SkyRoarBomb().setRegistryName(MOD_ID,"sky_roar_bomb").setCreativeTab(WARHAMMER).setUnlocalizedName("sky_roar_bomb"));
-               event.getRegistry().register(new VoidBomb().setRegistryName(MOD_ID,"void_bomb").setCreativeTab(WARHAMMER).setUnlocalizedName("void_bomb"));
+               Warhammer.easyItemRegister(event,Items.ORE_FIND_BOMB,"ore_finder_bomb");
+               Warhammer.easyItemRegister(event,Items.FIRE_BOMB,"fire_bomb");
+               Warhammer.easyItemRegister(event,Items.FISH_BOMB,"fish_bomb");
+               Warhammer.easyItemRegister(event,Items.SKY_ROAR_BOMB,"sky_roar_bomb");
+               Warhammer.easyItemRegister(event,Items.VOID_BOMB,"void_bomb");
 
-               event.getRegistry().register(new ItemBlock(Blocks.ARRAY_ETCHER.setRegistryName(MOD_ID,"array_etcher").setCreativeTab(WARHAMMER).setUnlocalizedName("array_etcher")));
+               Warhammer.easyItemRegister(event,Items.ARRAY_ETCHER,"array_etcher");
+               Warhammer.easyItemRegister(event,Items.CRYSTAL_CHEST,"crystal_chest");
+               Warhammer.easyItemRegister(event,Items.CRYSTAL_CONVERTER,"crystal_converter");
+               Warhammer.easyItemRegister(event,Items.CRYSTAL_GENERATOR,"crystal_generator");
+               Warhammer.easyItemRegister(event,Items.ENVIRONMENT_CONTROLLER,"environment_controller");
+               Warhammer.easyItemRegister(event,Items.LITTLE_CRYSTAL_BURNER,"little_crystal_burner");
+               Warhammer.easyItemRegister(event,Items.LITTLE_CRYSTAL_COLLIDER,"little_crystal_collider");
+               Warhammer.easyItemRegister(event,Items.PIPES_CONNECTOR,"pipes_connector");
+               Warhammer.easyItemRegister(event,Items.PLAYER_REINFORCER,"player_reinforcer");
+               Warhammer.easyItemRegister(event,Items.SHARD_DIMENSION_FINDER, "shard_dimension_finder");
+               Warhammer.easyItemRegister(event,Items.SHIELD_GENERATOR,"shield_generator");
+               Warhammer.easyItemRegister(event,Items.SPACE_RING_READER,"space_ring_reader");
+               Warhammer.easyItemRegister(event,Items.TURRET,"turret");
            }
         }
 
@@ -275,29 +362,29 @@ public class Warhammer {
         @SubscribeEvent
         public static void addBlocks(RegistryEvent.Register<Block> event) {
             if(WarhammerConfig.registerAllBlocks){
-                event.getRegistry().register(Blocks.ARRAY_ETCHER.setRegistryName(MOD_ID,"array_etcher").setCreativeTab(WARHAMMER).setUnlocalizedName("array_etcher"));
-                event.getRegistry().register(Blocks.CRYSTAL_CHEST.setRegistryName(MOD_ID,"crystal_chest").setCreativeTab(WARHAMMER).setUnlocalizedName("crystal_chest.json"));
-                event.getRegistry().register(Blocks.CRYSTAL_CONVERTER.setRegistryName(MOD_ID,"crystal_converter").setCreativeTab(WARHAMMER).setUnlocalizedName("crystal_converter"));
-                event.getRegistry().register(Blocks.CRYSTAL_GENERATOR.setRegistryName(MOD_ID,"crystal_generator").setCreativeTab(WARHAMMER).setUnlocalizedName("crystal_generator"));
-                event.getRegistry().register(Blocks.ENVIRONMENT_CONTROLLER.setRegistryName(MOD_ID,"environment_controller").setCreativeTab(WARHAMMER).setUnlocalizedName("environment_controller"));
-                event.getRegistry().register(Blocks.LITTLE_CRYSTAL_BURNER.setRegistryName(MOD_ID,"little_crystal_burner").setCreativeTab(WARHAMMER).setUnlocalizedName("little_crystal_burner"));
-                event.getRegistry().register(Blocks.LITTLE_CRYSTAL_COLLIDER.setRegistryName(MOD_ID,"little_crystal_collider").setCreativeTab(WARHAMMER).setUnlocalizedName("little_crystal_collider"));
-                event.getRegistry().register(Blocks.PIPES_CONNECTOR.setRegistryName(MOD_ID,"pipes_connector").setCreativeTab(WARHAMMER).setUnlocalizedName("pipes_connector"));
-                event.getRegistry().register(Blocks.PLAYER_REINFOCER.setRegistryName(MOD_ID,"player_reinforcer").setCreativeTab(WARHAMMER).setUnlocalizedName("player_reinforcer"));
-				event.getRegistry().register(Blocks.REACTOR_CONTROLLER.setRegistryName(MOD_ID,"reactor_controller").setCreativeTab(WARHAMMER).setUnlocalizedName("reactor_controller"));
-				event.getRegistry().register(Blocks.SHARD_DIMENSION_FINDER.setRegistryName(MOD_ID,"shard_dimension_finder").setCreativeTab(WARHAMMER).setUnlocalizedName("shard_dimension_finder"));
-				event.getRegistry().register(Blocks.SHIELD_GENERATOR.setRegistryName(MOD_ID,"shield_generator").setCreativeTab(WARHAMMER).setUnlocalizedName("shield_generator"));
-				event.getRegistry().register(Blocks.SPACE_RING_READER.setRegistryName(MOD_ID,"space_ring_reader").setCreativeTab(WARHAMMER).setUnlocalizedName("space_ring_reader"));
-				event.getRegistry().register(Blocks.TOOLS_FORGER.setRegistryName(MOD_ID,"tools_forger").setCreativeTab(WARHAMMER).setUnlocalizedName("tools_forger"));
-				event.getRegistry().register(Blocks.TURRET.setRegistryName(MOD_ID,"turret").setCreativeTab(WARHAMMER).setUnlocalizedName("turret"));
+                Warhammer.easyBlockRegister(event,Blocks.ARRAY_ETCHER,"array_etcher");
+                Warhammer.easyBlockRegister(event,Blocks.CRYSTAL_CHEST,"crystal_chest");
+                Warhammer.easyBlockRegister(event,Blocks.CRYSTAL_CONVERTER,"crystal_converter");
+                Warhammer.easyBlockRegister(event,Blocks.CRYSTAL_GENERATOR,"crystal_generator");
+                Warhammer.easyBlockRegister(event,Blocks.ENVIRONMENT_CONTROLLER,"environment_controller");
+                Warhammer.easyBlockRegister(event,Blocks.LITTLE_CRYSTAL_BURNER,"little_crystal_burner");
+                Warhammer.easyBlockRegister(event,Blocks.LITTLE_CRYSTAL_COLLIDER,"little_crystal_collider");
+                Warhammer.easyBlockRegister(event,Blocks.PIPES_CONNECTOR,"pipes_connector");
+                Warhammer.easyBlockRegister(event,Blocks.PLAYER_REINFOCER,"player_reinforcer");
+				Warhammer.easyBlockRegister(event,Blocks.REACTOR_CONTROLLER,"reactor_controller");
+				Warhammer.easyBlockRegister(event,Blocks.SHARD_DIMENSION_FINDER,"shard_dimension_finder");
+				Warhammer.easyBlockRegister(event,Blocks.SHIELD_GENERATOR,"shield_generator");
+				Warhammer.easyBlockRegister(event,Blocks.SPACE_RING_READER,"space_ring_reader");
+				Warhammer.easyBlockRegister(event,Blocks.TOOLS_FORGER,"tools_forger");
+				Warhammer.easyBlockRegister(event,Blocks.TURRET,"turret");
 
-				event.getRegistry().register(Blocks.GOLD_CRYSTAL_BLOCK.setRegistryName(MOD_ID,"gold_crystal_block").setCreativeTab(WARHAMMER).setUnlocalizedName("gold_crystal_block"));
-                event.getRegistry().register(Blocks.WOOD_CRYSTAL_BLOCK.setRegistryName(MOD_ID,"wood_crystal_block").setCreativeTab(WARHAMMER).setUnlocalizedName("wood_crystal_block"));
-                event.getRegistry().register(Blocks.WATER_CRYSTAL_BLOCK.setRegistryName(MOD_ID,"water_crystal_block").setCreativeTab(WARHAMMER).setUnlocalizedName("water_crystal_block"));
-                event.getRegistry().register(Blocks.FIRE_CRYSTAL_BLOCK.setRegistryName(MOD_ID,"fire_crystal_block").setCreativeTab(WARHAMMER).setUnlocalizedName("fire_crystal_block"));
-                event.getRegistry().register(Blocks.SOIL_CRYSTAL_BLOCK.setRegistryName(MOD_ID,"soil_crystal_block").setCreativeTab(WARHAMMER).setUnlocalizedName("soil_crystal_block"));
-                event.getRegistry().register(Blocks.THUNDER_CRYSTAL_BLOCK.setRegistryName(MOD_ID,"thunder_crystal_block").setCreativeTab(WARHAMMER).setUnlocalizedName("thunder_crystal_block"));
-                event.getRegistry().register(Blocks.PIPELINE.setRegistryName(MOD_ID,"pipeline").setResistance(1000).setHardness(10).setCreativeTab(WARHAMMER).setUnlocalizedName("pipeline"));
+				Warhammer.easyBlockRegister(event,Blocks.GOLD_CRYSTAL_BLOCK,"gold_crystal_block");
+                Warhammer.easyBlockRegister(event,Blocks.WOOD_CRYSTAL_BLOCK,"wood_crystal_block");
+                Warhammer.easyBlockRegister(event,Blocks.WATER_CRYSTAL_BLOCK,"water_crystal_block");
+                Warhammer.easyBlockRegister(event,Blocks.FIRE_CRYSTAL_BLOCK,"fire_crystal_block");
+                Warhammer.easyBlockRegister(event,Blocks.SOIL_CRYSTAL_BLOCK,"soil_crystal_block");
+                Warhammer.easyBlockRegister(event,Blocks.THUNDER_CRYSTAL_BLOCK,"thunder_crystal_block");
+                Warhammer.easyBlockRegister(event,Blocks.PIPELINE.setResistance(1000).setHardness(10),"pipeline");
             }
         }
     }

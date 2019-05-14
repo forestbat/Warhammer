@@ -13,6 +13,7 @@ import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.util.input.ControllerAdapter;
 
 import java.util.Random;
@@ -23,7 +24,9 @@ import static org.lwjgl.input.Keyboard.KEY_RSHIFT;
 
 public class VanillaStuff {
     /** Why 52? It's AbyssalCraft's Omossol dimension id*/
-    public void noVoid(EntityPlayer entityPlayer){
+    @SubscribeEvent
+    public void noVoid(TickEvent.PlayerTickEvent event){
+        EntityPlayer entityPlayer=event.player;
         if(entityPlayer.getEntityWorld().provider.getDimension()!=52) {
             if (NO_VOID && entityPlayer.posY <= -64) {
                 final BlockPos bedLocation = entityPlayer.getBedLocation(entityPlayer.getSpawnDimension());
