@@ -25,21 +25,10 @@ public class VoidBomb extends BombBase{
     }
     public void bombAction(EntityPlayer player,World world){
         BlockPos blockPos=shootCalculator(player,world);
-        Iterator<EntityLivingBase> entities=world.getEntities(EntityLivingBase.class,new MobInCirclePredicate(blockPos)).iterator();
+        Iterator<EntityLivingBase> entities=world.getEntities
+            (EntityLivingBase.class,input -> input.getDistanceSq(blockPos)<20).iterator();
         while (entities.hasNext())
         entities.next().addPotionEffect(new VoidPotionEffect(MobEffects.WITHER,400));
-    }
-    public static class MobInCirclePredicate implements Predicate<EntityLivingBase>{
-        @Nonnull BlockPos pos;
-        public MobInCirclePredicate(BlockPos pos){
-            this.pos=pos;
-        }
-        @Override
-        public boolean apply(@Nullable EntityLivingBase input) {
-            if(input!=null)
-            return input.getDistanceSq(pos)<20;
-            else return false;
-        }
     }
     public static class VoidPotionEffect extends PotionEffect{
         public VoidPotionEffect(Potion potion, int duration){
