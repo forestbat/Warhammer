@@ -7,9 +7,11 @@ import net.minecraft.inventory.Slot;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class SpaceRingReaderContainer extends Container {
-    SpaceRingReader spaceRingReader;
-    EntityPlayer player;
-    public SpaceRingReaderContainer(){
+    private SpaceRingReader spaceRingReader;
+    private EntityPlayer player;
+    public SpaceRingReaderContainer(SpaceRingReader spaceRingReader, EntityPlayer player){
+        this.spaceRingReader=spaceRingReader;
+        this.player=player;
         for(int i=0;i<27;i++) {
             addSlotToContainer(new SlotItemHandler(new SpaceRingReader(),i,16+18*i,40+(i/9)*18));
             addSlotToContainer(new Slot(player.inventory, i, 16 + 18 * i,90+(i/9)*18));

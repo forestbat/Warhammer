@@ -32,7 +32,7 @@ public class BombBase extends Item {
         return new ActionResult<>(EnumActionResult.SUCCESS,itemStack);
     }
     public BlockPos shootCalculator(Entity entityThrower,World world){
-        float v0=BOMB_FLIGHT_VELOCITY;
+        //float v0=BOMB_FLIGHT_VELOCITY;
         Timer timer=new Timer();
         double v0AxisX=MathHelper.cos(entityThrower.rotationYaw*0.017453F);
         double v0AxisY=MathHelper.sin(entityThrower.rotationPitch*0.017453F);

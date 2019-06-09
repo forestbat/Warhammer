@@ -77,8 +77,8 @@ public class CrystalConverter extends EntityMachineBase implements IItemHandler 
         return new ItemStackHandler().insertItem(slot,itemStack,false);
     }
     @Nonnull
-    public ItemStack extractItem(int slot,int amount,boolean simulate){
-        return new ItemStackHandler().extractItem(slot,amount,simulate);
+    public ItemStack extractItem(int slot,int amount,boolean simulate) {
+        return new ItemStackHandler().extractItem(slot, amount, simulate);
     }
     public int getSlotLimit(int slot){
         if(slot==0)
